@@ -57,9 +57,15 @@ public class HelloController {
     }
 
     @PostMapping("/sign-up")
-    public void signUp(@RequestBody Usermodel user) {
+    public String signUp(@RequestBody Usermodel user) {
 
-        userRepository.save(user);
+        if(userRepository.findByUsername(user.getUsername())==null) {
+            userRepository.save(user);
+            return "Success";
+        }
+        else{
+            return "Username Already Exsist";
+        }
     }
 
 }
