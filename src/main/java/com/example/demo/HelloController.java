@@ -1,6 +1,7 @@
 package com.example.demo;
 
 
+import com.example.demo.filters.JWTRequestFilter;
 import com.example.demo.models.AuthenticationRequest;
 import com.example.demo.models.AuthenticationResponse;
 import com.example.demo.models.Usermodel;
@@ -35,10 +36,10 @@ public class HelloController {
 
     @GetMapping("/hello")
     public String hello() {
-        return "Hello";
+        return "Hello " + JWTRequestFilter.UserClaim;
     }
 
-    @PostMapping("/authenticate")
+    @PostMapping("/token")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
         try {
             authenticationManager.authenticate(
