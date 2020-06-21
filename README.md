@@ -1,7 +1,10 @@
 # SpringBoot_JWT
 
 <b>JWT Authentication for the Spring boot APIs.</b>
-<img src="static/JWTToken.png" width="350" title="hover text">
+
+<p align="center">
+<img src="https://miro.medium.com/max/502/1*Vc4AQeMNmlr6ZHiLvMPH9w.png" width="350" title="hover text">
+</p>
 
 1. Need to Register into the system by calling the /sign-up endpoint.
 
