@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 
 
 @RestController
@@ -33,6 +35,9 @@ public class HelloController {
 
     @Autowired
     private JWTUtil jwtUtil;
+
+    @Autowired
+    private BCryptPasswordEncoder bcryptEncoder;
 
     @GetMapping("/hello")
     public String hello() {
@@ -61,6 +66,7 @@ public class HelloController {
     public String signUp(@RequestBody Usermodel user) {
 
         if(userRepository.findByUsername(user.getUsername())==null) {
+            user.setPassword(bcryptEncoder.encode(user.getPassword()));
             userRepository.save(user);
             return "Success";
         }
