@@ -12,16 +12,16 @@ secure the Spring boot APIs using the JWT token. Please follow the below steps t
 
 1. Need to Register into the system by calling the /sign-up endpoint.
    <p align="center">
-   <img src="static/Image1.png" >
+   <img src="src/main/resources/static/Image1.png" >
    </p>
 
 2. Then invoke the /token endpoint to get the JWT Token.
    <p align="center">
-   <img src="static/Image2.png" >
+   <img src="src/main/resources/static/Image2.png" >
    </p>
 
 
 3. After that call the /hello endpoint to get the result.
    <p align="center">
-   <img src="static/Image3.png" >
+   <img src="src/main/resources/static/Image3.png" >
    </p>
