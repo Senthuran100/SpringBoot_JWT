@@ -4,7 +4,7 @@ package com.example.demo;
 import com.example.demo.filters.JWTRequestFilter;
 import com.example.demo.models.AuthenticationRequest;
 import com.example.demo.models.AuthenticationResponse;
-import com.example.demo.models.Usermodel;
+import com.example.demo.models.User;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -63,7 +63,7 @@ public class HelloController {
     }
 
     @PostMapping("/sign-up")
-    public String signUp(@RequestBody Usermodel user) {
+    public String signUp(@RequestBody User user) {
 
         if(userRepository.findByUsername(user.getUsername())==null) {
             user.setPassword(bcryptEncoder.encode(user.getPassword()));

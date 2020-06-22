@@ -2,9 +2,10 @@ package com.example.demo.models;
 
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
-public class Usermodel {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -14,6 +15,13 @@ public class Usermodel {
     private String username;
 
     private String password;
+
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "USER_ROLES", joinColumns = {
+            @JoinColumn(name = "USER_ID") }, inverseJoinColumns = {
+            @JoinColumn(name = "ROLE_ID") })
+    private Set<Role> roles;
 
     public String getUsername() {
         return username;
@@ -29,6 +37,15 @@ public class Usermodel {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
 

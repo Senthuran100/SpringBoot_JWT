@@ -1,20 +1,27 @@
 package com.example.demo;
 
+import com.example.demo.models.Role;
+import com.example.demo.models.User;
+import com.example.demo.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+
+import java.util.*;
 import java.util.function.Function;
 
 
 
 @Service
 public class JWTUtil {
+    @Autowired
+    UserRepository userRepository;
     private String SECRET_KEY = "secret";
     private String signature;
 
@@ -45,7 +52,12 @@ public class JWTUtil {
 
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("Sample1","Hello1");
+        Set<String> Userroles = new HashSet<>();
+        User user = userRepository.findByUsername(userDetails.getUsername());
+        for(Role role:user.getRoles()){
+            Userroles.add(role.getName());
+        }
+        claims.put("Roles",Userroles.toArray());
         return createToken(claims, userDetails.getUsername());
     }
 
