@@ -6,6 +6,7 @@ import java.util.Set;
 @Entity
 public class Role {
 
+
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long id;
@@ -28,4 +29,5 @@ public class Role {
     public void setName(String name) {
         this.name = name;
     }
+
 }

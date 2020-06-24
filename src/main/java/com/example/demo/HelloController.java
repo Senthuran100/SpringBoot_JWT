@@ -4,7 +4,9 @@ package com.example.demo;
 import com.example.demo.filters.JWTRequestFilter;
 import com.example.demo.models.AuthenticationRequest;
 import com.example.demo.models.AuthenticationResponse;
+import com.example.demo.models.Role;
 import com.example.demo.models.User;
+import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.util.HashSet;
+import java.util.Set;
 
 
 @RestController
@@ -33,6 +37,9 @@ public class HelloController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Autowired
     private JWTUtil jwtUtil;
@@ -75,6 +82,10 @@ public class HelloController {
     public String signUp(@RequestBody User user) {
 
         if(userRepository.findByUsername(user.getUsername())==null) {
+            Set<Role> roles= new HashSet<>();
+            Role role= roleRepository.findByName("USER");
+            roles.add(role);
+            user.setRoles(roles);
             user.setPassword(bcryptEncoder.encode(user.getPassword()));
             userRepository.save(user);
             return "Success";
