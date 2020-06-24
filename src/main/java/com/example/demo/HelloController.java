@@ -8,6 +8,7 @@ import com.example.demo.models.User;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -39,8 +40,16 @@ public class HelloController {
     @Autowired
     private BCryptPasswordEncoder bcryptEncoder;
 
+
     @GetMapping("/hello")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String hello() {
+        return "Hello " + JWTRequestFilter.UserClaim+ ". You have Admin role";
+    }
+
+    @GetMapping("/user")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    public String user() {
         return "Hello " + JWTRequestFilter.UserClaim;
     }
 
