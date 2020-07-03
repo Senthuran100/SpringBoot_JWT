@@ -8,6 +8,7 @@ import com.example.demo.models.Role;
 import com.example.demo.models.User;
 import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.throttle.Throttle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -56,6 +57,7 @@ public class HelloController {
 
     @GetMapping("/user")
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+    @Throttle(timeFrameInSeconds = 60, calls = 2)
     public String user() {
         return "Hello " + JWTRequestFilter.UserClaim;
     }
