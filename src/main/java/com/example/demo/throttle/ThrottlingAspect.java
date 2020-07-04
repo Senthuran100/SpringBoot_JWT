@@ -44,7 +44,7 @@ public class ThrottlingAspect {
                 .findFirst()
                 .map(d -> {
                     Throttle t = (Throttle) d;
-                    return new ThrottlingConfig(t.timeFrameInSeconds(), t.calls());
+                    return new ThrottlingConfig(t.timeFrameInSeconds(), t.calls(), "${throttle.header}");
                 })
                 .orElse(ThrottlingConfig.DEFAULT);
     }
