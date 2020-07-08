@@ -25,6 +25,7 @@ import java.util.Set;
 
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class HelloController {
 
 
