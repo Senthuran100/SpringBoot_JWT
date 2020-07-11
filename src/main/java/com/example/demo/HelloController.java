@@ -25,7 +25,7 @@ import java.util.Set;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+
 public class HelloController {
 
 
@@ -54,6 +54,7 @@ public class HelloController {
         return "Hello " + JWTRequestFilter.UserClaim+ ". You have Admin role";
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/user")
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     @Throttle(timeFrameInSeconds = 60, calls = 2)
@@ -62,6 +63,7 @@ public class HelloController {
     }
 
     @PostMapping("/token")
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
         try {
             authenticationManager.authenticate(
@@ -80,6 +82,7 @@ public class HelloController {
     }
 
     @PostMapping("/sign-up")
+    @CrossOrigin(origins = "http://localhost:3000")
     public String signUp(@RequestBody User user) {
 
         if(userRepository.findByUsername(user.getUsername())==null) {
