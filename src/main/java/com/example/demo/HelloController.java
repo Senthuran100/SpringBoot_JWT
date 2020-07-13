@@ -47,7 +47,7 @@ public class HelloController {
     @Autowired
     private BCryptPasswordEncoder bcryptEncoder;
 
-
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/hello")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String hello() {

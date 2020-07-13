@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { form } from "react-bootstrap";
 import axios from 'axios';
+import   {ToastMessage}   from './ToastMessage';
 
 export default function Signup() {
 
@@ -11,12 +12,22 @@ export default function Signup() {
     const [jwt, setJwt] = useState("");
     const [jwtvalue, setJwtvalue] = useState("");
     const [userresponse, setUserresponse] = useState("");
+    const [show,setShow] = useState(false);
+    const [signupResponse,setSignupresponse] = useState("");
 
     const handleSignUp = (e) => {
         e.preventDefault()
         axios.post('http://localhost:8080/sign-up', {
             username: username,
             password: password
+        })
+        .then((response)=>{
+          if(response.data!= null){
+              setShow(true);
+              setSignupresponse(response.data)
+          }
+        },(err)=>{
+            console.log(err);
         })
     };
 
@@ -30,6 +41,7 @@ export default function Signup() {
                 setJwtvalue(response.data.jwt)
                 console.log(response.data.jwt);
             }, (error) => {
+                setJwtvalue(error);
                 console.log(error);
             });
     };
@@ -44,12 +56,27 @@ export default function Signup() {
                 setUserresponse(response.data);
                 console.log(response.data);
             }, (error) => {
+                setUserresponse(error);
+                console.log(error);
+            })
+    }
+
+    const invokeHello = (e) => {
+        e.preventDefault()
+        axios.get('http://localhost:8080/hello', { headers: headers })
+            .then((response) => {
+                setUserresponse(response.data);
+                console.log(response.data);
+            }, (error) => {
                 console.log(error);
             })
     }
 
     return (
         <div>
+            <div style={{"display":show ? "block":"none"}}>
+            <ToastMessage data={{show:show, message : signupResponse}}/>
+            </div>
             <div class="container">
                 <div class="row">
                     <div class="col-sm-6">
@@ -100,15 +127,15 @@ export default function Signup() {
                 <div class="card" >
                     <div class="card-body">
                         <h1>Invoke User/Hello Endpoint</h1>
-                        <form onSubmit={invokeUser}>
+                        <form >
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Input JWT Token</label>
                                 <input type="text" class="form-control" value={jwt} onChange={e => setJwt(e.target.value)} id="jwt" aria-describedby="emailHelp" placeholder=" JWT " required />
                             </div>
                             <div class="container">
-                                <div class="row">
-                                    <button type="submit" class="btn btn-primary">Invoke User Endpoint</button>
-                                    <button type="submit" class="btn btn-primary">Invoke Hello Endpoint</button>
+                                <div>
+                                    <button type="submit" class="btn btn-primary" onClick={invokeUser}>Invoke User Endpoint</button>
+                                    <button type="submit" class="btn btn-primary ml-3" onClick={invokeHello}>Invoke Hello Endpoint</button>
                                 </div>
                             </div>
                         </form>
