@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { form } from "react-bootstrap";
 import axios from 'axios';
-import   {ToastMessage}   from './ToastMessage';
+import { ToastMessage } from './ToastMessage';
 
 export default function Signup() {
 
@@ -12,8 +12,8 @@ export default function Signup() {
     const [jwt, setJwt] = useState("");
     const [jwtvalue, setJwtvalue] = useState("");
     const [userresponse, setUserresponse] = useState("");
-    const [show,setShow] = useState(false);
-    const [signupResponse,setSignupresponse] = useState("");
+    const [show, setShow] = useState(false);
+    const [signupResponse, setSignupresponse] = useState("");
 
     const handleSignUp = (e) => {
         e.preventDefault()
@@ -21,14 +21,14 @@ export default function Signup() {
             username: username,
             password: password
         })
-        .then((response)=>{
-          if(response.data!= null){
-              setShow(true);
-              setSignupresponse(response.data)
-          }
-        },(err)=>{
-            console.log(err);
-        })
+            .then((response) => {
+                if (response.data != null) {
+                    setShow(true);
+                    setSignupresponse(response.data)
+                }
+            }, (err) => {
+                console.log(err);
+            })
     };
 
     const handleTokenRequest = (e) => {
@@ -74,8 +74,8 @@ export default function Signup() {
 
     return (
         <div>
-            <div style={{"display":show ? "block":"none"}}>
-            <ToastMessage data={{show:show, message : signupResponse}}/>
+            <div style={{ "display": show ? "block" : "none" }}>
+                <ToastMessage data={{ show: show, message: signupResponse }} />
             </div>
             <div class="container">
                 <div class="row">
